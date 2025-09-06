@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Globe } from 'lucide-react';
 
@@ -9,6 +9,7 @@ interface LanguageToggleProps {
 
 export function LanguageToggle({ onLanguageChange, currentLanguage }: LanguageToggleProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const languages = [
     { code: 'pa', name: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
@@ -18,8 +19,22 @@ export function LanguageToggle({ onLanguageChange, currentLanguage }: LanguageTo
 
   const currentLang = languages.find(lang => lang.code === currentLanguage) || languages[0];
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <Button
         variant="outline"
         size="sm"

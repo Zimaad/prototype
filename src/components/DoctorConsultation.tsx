@@ -130,7 +130,12 @@ export function DoctorConsultation({ language, onBack }: DoctorConsultationProps
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-primary text-primary-foreground px-6 py-4 flex items-center gap-4">
-        <Button variant="ghost" size="sm" onClick={onBack} className="text-primary-foreground hover:bg-primary-foreground/10">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onBack}
+          className="text-primary-foreground hover:bg-primary-foreground/10"
+        >
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <h1 className="text-xl">{t.title}</h1>
@@ -142,16 +147,17 @@ export function DoctorConsultation({ language, onBack }: DoctorConsultationProps
           <Card key={doctor.id} className="p-6">
             <div className="flex items-start gap-4">
               {/* Doctor Avatar */}
-              <div className="text-4xl">{doctor.image}</div>
-              
+              <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 text-3xl sm:w-16 sm:h-16 sm:text-4xl">
+                {doctor.image}
+              </div>
+
               {/* Doctor Info */}
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <h3 className="text-xl mb-1">{getDoctorName(doctor)}</h3>
-                    <p className="text-muted-foreground">{getDoctorSpecialty(doctor)}</p>
+                  <div className="min-w-0">
+                    <h3 className="text-xl mb-1 break-words">{getDoctorName(doctor)}</h3>
+                    <p className="text-muted-foreground break-words">{getDoctorSpecialty(doctor)}</p>
                   </div>
-                  
                   <Badge className={`${getStatusColor(doctor.status)} text-white`}>
                     {getStatusText(doctor.status)}
                   </Badge>
@@ -172,14 +178,14 @@ export function DoctorConsultation({ language, onBack }: DoctorConsultationProps
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
                   {doctor.status === 'available' ? (
                     <>
-                      <Button className="flex-1 bg-primary hover:bg-primary/90">
+                      <Button className="flex-1 min-w-0 bg-primary hover:bg-primary/90">
                         <Phone className="h-4 w-4 mr-2" />
                         {t.callNow}
                       </Button>
-                      <Button variant="outline" className="flex-1">
+                      <Button variant="outline" className="flex-1 min-w-0">
                         <Video className="h-4 w-4 mr-2" />
                         {t.videoCall}
                       </Button>
